@@ -1,0 +1,40 @@
+<div
+  [ngStyle]="{ top: annotation.coords.y + 'px', left: annotation.coords.x + 'px'}"
+  class="app-annotation__wrapper"
+  appDragging
+  [coords]="annotation.coords"
+  [elementId]="pageId"
+>
+  <div
+    class="app-annotation__delete"
+    (click)="onDelete()"
+  >x</div>
+
+  <ng-container [ngSwitch]="annotation.type">
+    <div *ngSwitchCase="'text'" class="app-annotation__text">
+      <ng-template #annotationContent>
+        <p>{{ annotation.content }}</p>
+      </ng-template>
+
+      <ng-container *ngIf="!annotation.content; else annotationContent">
+        <input
+          type="text"
+          [formControl]="textInput"
+          autofocus
+        />
+        <button type="button" (click)="onTextChanged()">Save</button>
+      </ng-container>
+    </div>
+
+    <div *ngSwitchCase="'image'" class="app-annotation__image">
+      <input
+        *ngIf="!annotation.content"
+        type="file"
+        accept="image/*"
+        (change)="onFileChanged($event)"
+      />
+
+      <img *ngIf="annotation.content" [src]="annotation.content" alt="Image" />
+    </div>
+  </ng-container>
+</div>

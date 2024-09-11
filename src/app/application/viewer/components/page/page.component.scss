@@ -1,0 +1,21 @@
+.app-page__wrapper {
+  margin: auto 10px;
+  position: relative;
+}
+
+.app-page__image {
+  width: 100%;
+}
+
+.app-page__annotation-selector {
+  position: absolute;
+  display: flex;
+  border: 1px solid #cecece;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.app-page__annotation-selector-item {
+  cursor: pointer;
+  padding: 0 4px;
+}

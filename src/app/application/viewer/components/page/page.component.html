@@ -1,0 +1,29 @@
+<div
+  appOutsideClick
+  class="app-page__wrapper"
+  [id]="'page' + page.number"
+  (click)="onClick($event)"
+  (onOutsideClick)="hideAnnotationSelector()"
+>
+  <img class="app-page__image" [src]="page.imageUrl | assetsImage" alt="image" />
+
+  <ng-container *ngFor="let annotation of annotations">
+      <app-annotation *ngIf="annotation.page === page.number"
+        [pageId]="'page' + page.number"
+        [annotation]="annotation"
+      ></app-annotation>
+  </ng-container>
+
+  <div class="app-page__annotation-selector"
+    *ngIf="annotationSelectorIsVisible"
+    [ngStyle]="{ top: coords.y + 'px', left: coords.x + 'px'}"
+  >
+    <div class="app-page__annotation-selector-item" (click)="addAnnotation('text')">
+      <img [src]="'icons/text.png' | assetsImage" alt="Add text" />
+    </div>
+
+    <div class="app-page__annotation-selector-item" (click)="addAnnotation('image')">
+      <img [src]="'icons/image.png' | assetsImage" alt="Add image" />
+    </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<section class="app-viewer__header">
+  <h2>Viewer</h2>
+  <div class="app-viewer__actions">
+    <app-zoom></app-zoom>
+    <app-save-button></app-save-button>
+  </div>
+</section>
+
+<section class="app-viewer__body">
+  <ng-container *ngIf="document$ | async as doc">
+    <ng-container *ngFor="let page of doc.pages">
+      <app-page
+        [page]="page"
+        [annotations]="doc.annotations"
+        [style.width.px]="800 * (zoomValue$ | async)"
+      ></app-page>
+    </ng-container>
+  </ng-container>
+</section>
+
+<section class="app-viewer__footer">
+</section>
