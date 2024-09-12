@@ -17,7 +17,9 @@ export class PageComponent {
   @Input() annotations: IAnnotation[] = [];
   @Input() page: IPage;
 
-  constructor(private documentService: DocumentService) {}
+  constructor(
+    private documentService: DocumentService,
+  ) {}
 
   public hideAnnotationSelector(): void {
     this.annotationSelectorIsVisible = false;
@@ -44,5 +46,6 @@ export class PageComponent {
     };
 
     this.documentService.addAnnotation(annotation);
+    this.annotationSelectorIsVisible = false;
   }
 }
