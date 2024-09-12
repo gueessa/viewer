@@ -4,11 +4,14 @@
   appDragging
   [coords]="annotation.coords"
   [elementId]="pageId"
+  (coordinatesChangedEvent)="onCoordinatesChanged($event)"
 >
   <div
     class="app-annotation__delete"
     (click)="onDelete()"
-  >x</div>
+  >
+    <img [src]="'icons/delete.png' | assetsImage" alt="Delete" />
+  </div>
 
   <ng-container [ngSwitch]="annotation.type">
     <div *ngSwitchCase="'text'" class="app-annotation__text">

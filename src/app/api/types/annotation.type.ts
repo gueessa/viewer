@@ -1,7 +1,4 @@
-export interface ICoords {
-  x: number;
-  y: number;
-}
+import {ICoords} from './coords.type';
 
 export interface IAnnotation {
   id?: number;

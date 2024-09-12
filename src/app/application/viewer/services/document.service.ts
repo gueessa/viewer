@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {IDocument} from '../../../api/interfaces/document.interface';
+import {IDocument} from '../../../api/types/document.type';
 import {DocumentApiService} from '../../../api/services/document-api.service';
 import {first} from 'rxjs/operators';
-import {IAnnotation} from '../../../api/interfaces/annotation.interface';
+import {IAnnotation} from '../../../api/types/annotation.type';
 
 @Injectable({
   providedIn: 'root',

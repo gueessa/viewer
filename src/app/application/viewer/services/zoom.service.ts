@@ -5,17 +5,17 @@ import {BehaviorSubject, Observable} from 'rxjs';
   providedIn: 'root',
 })
 export class ZoomService {
-  private _zoomValue$: BehaviorSubject<number> = new BehaviorSubject<number>(1);
+  private zoomValue$: BehaviorSubject<number> = new BehaviorSubject<number>(1);
 
   public asObservable(): Observable<number> {
-    return this._zoomValue$.asObservable();
+    return this.zoomValue$.asObservable();
   }
 
   public zoomIn(): void {
-    this._zoomValue$.next(this._zoomValue$.getValue() + 0.1);
+    this.zoomValue$.next(this.zoomValue$.getValue() + 0.1);
   }
 
   public zoomOut(): void {
-    this._zoomValue$.next(this._zoomValue$.getValue() - 0.1);
+    this.zoomValue$.next(this.zoomValue$.getValue() - 0.1);
   }
 }

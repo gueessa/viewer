@@ -1,7 +1,7 @@
 import {ApiService} from './api.service';
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, of} from 'rxjs';
-import {IDocument} from '../interfaces/document.interface';
+import {IDocument} from '../types/document.type';
 import documents from '../../../../server/test.json';
 
 @Injectable({

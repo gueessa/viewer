@@ -1,8 +1,8 @@
 import {DOCUMENT} from '@angular/common';
 import {Directive, ElementRef, Inject, AfterViewInit, Input, OnDestroy, EventEmitter, Output} from '@angular/core';
-import {fromEvent, Subject, Subscription} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
-import {ICoords} from '../../../api/interfaces/annotation.interface';
+import {fromEvent, Subject} from 'rxjs';
+import {switchMap, takeUntil, tap} from 'rxjs/operators';
+import {ICoords} from '../../../api/types/coords.type';
 
 @Directive({
   selector: '[appDragging]',
@@ -10,7 +10,7 @@ import {ICoords} from '../../../api/interfaces/annotation.interface';
 export class DraggingDirective implements AfterViewInit, OnDestroy {
   @Input() elementId!: string;
   @Input() coords!: ICoords;
-  @Output() newCoordsEvent = new EventEmitter<ICoords>();
+  @Output() coordinatesChangedEvent = new EventEmitter<ICoords>();
 
   private draggingElement: HTMLElement | HTMLBodyElement;
   private element: HTMLElement;
@@ -31,8 +31,6 @@ export class DraggingDirective implements AfterViewInit, OnDestroy {
   }
 
   initDrag(): void {
-    console.log('initDrag');
-
     const dragStart$ = fromEvent<MouseEvent>(this.element, 'mousedown');
     const dragEnd$ = fromEvent<MouseEvent>(this.document, 'mouseup');
     const drag$ = fromEvent<MouseEvent>(this.document, 'mousemove').pipe(
@@ -45,40 +43,32 @@ export class DraggingDirective implements AfterViewInit, OnDestroy {
         currentX = this.coords.x,
         currentY = this.coords.y;
 
-    let dragSub: Subscription;
+    const minBoundX = 0;
+    const minBoundY = 0;
+    const maxBoundX = this.draggingElement.offsetWidth - this.element.offsetWidth;
+    const maxBoundY = this.draggingElement.offsetHeight - this.element.offsetHeight;
 
-    const minBoundX = this.draggingElement.offsetLeft;
-    const minBoundY = this.draggingElement.offsetTop;
-
-    const maxBoundX =
-      minBoundX +
-      this.draggingElement.offsetWidth -
-      this.element.offsetWidth;
-
-    const maxBoundY =
-      minBoundY +
-      this.draggingElement.offsetHeight -
-      this.element.offsetHeight;
-
-    dragStart$.subscribe((event: MouseEvent) => {
-      console.log('dragStart$');
-
-      initialX = event.clientX - currentX;
-      initialY = event.clientY - currentY;
-      this.element.classList.add('app-dragging');
-
-      dragSub = drag$.subscribe((event: MouseEvent): void => {
-        event.preventDefault();
-
+    dragStart$.pipe(
+      tap((event: MouseEvent) => {
+          initialX = event.clientX - currentX;
+          initialY = event.clientY - currentY;
+          this.element.classList.add('dragging');
+      }),
+      switchMap(() =>
+        drag$.pipe(
+          tap((event: MouseEvent) => event.preventDefault()),
+          takeUntil(dragEnd$)
+        )
+      )
+    ).subscribe((event: MouseEvent) => {
         const x = event.clientX - initialX;
         const y = event.clientY - initialY;
 
         currentX = Math.max(minBoundX, Math.min(x, maxBoundX));
         currentY = Math.max(minBoundY, Math.min(y, maxBoundY));
 
-        console.log('currentX:' + currentX);
-        console.log('currentY:' + currentY);
-      });
+        this.element.style.top  = currentY + 'px';
+        this.element.style.left = currentX + 'px';
     });
 
     dragEnd$.pipe(
@@ -86,8 +76,7 @@ export class DraggingDirective implements AfterViewInit, OnDestroy {
     ).subscribe(() => {
       initialX = currentX;
       initialY = currentY;
-
-      this.newCoordsEvent.emit({ x: initialX, y: initialY });
+      this.coordinatesChangedEvent.emit({ x: initialX, y: initialY });
       this.element.classList.remove('app-dragging');
     });
   }

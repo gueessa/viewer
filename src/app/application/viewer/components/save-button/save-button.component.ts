@@ -8,8 +8,7 @@ import {DocumentService} from '../../services/document.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class SaveButtonComponent {
-  constructor(private documentService: DocumentService) {
-  }
+  constructor(private documentService: DocumentService) {}
 
   public onSave(): void {
     this.documentService.saveCurrentDocument();

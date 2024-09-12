@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Observable} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
-import {IDocument} from '../../api/interfaces/document.interface';
+import {IDocument} from '../../api/types/document.type';
 import {ZoomService} from './services/zoom.service';
 import {DocumentService} from './services/document.service';
 

@@ -1,6 +1,6 @@
 import {Component, Input, ViewEncapsulation} from '@angular/core';
-import {IPage} from '../../../../api/interfaces/page.interface';
-import {IAnnotation} from '../../../../api/interfaces/annotation.interface';
+import {IPage} from '../../../../api/types/page.type';
+import {IAnnotation} from '../../../../api/types/annotation.type';
 import {DocumentService} from '../../services/document.service';
 
 @Component({

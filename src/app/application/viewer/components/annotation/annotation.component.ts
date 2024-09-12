@@ -1,7 +1,8 @@
 import {Component, Input, ViewEncapsulation} from '@angular/core';
-import {IAnnotation} from '../../../../api/interfaces/annotation.interface';
+import {IAnnotation} from '../../../../api/types/annotation.type';
 import {DocumentService} from '../../services/document.service';
 import {FormControl, Validators} from '@angular/forms';
+import {ICoords} from '../../../../api/types/coords.type';
 
 @Component({
   selector: 'app-annotation',
@@ -21,8 +22,7 @@ export class AnnotationComponent {
     ]
   );
 
-  constructor(private documentService: DocumentService) {
-  }
+  constructor(private documentService: DocumentService) {}
 
   public onDelete(): void {
     this.documentService.deleteAnnotation(this.annotation.id);
@@ -52,5 +52,10 @@ export class AnnotationComponent {
 
       fileReader.readAsDataURL(file);
     }
+  }
+
+  public onCoordinatesChanged(coords: ICoords): void {
+    this.annotation.coords = coords;
+    this.documentService.updateAnnotation(this.annotation);
   }
 }

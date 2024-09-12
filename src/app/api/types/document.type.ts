@@ -1,5 +1,5 @@
-import {IPage} from './page.interface';
-import {IAnnotation} from './annotation.interface';
+import {IPage} from './page.type';
+import {IAnnotation} from './annotation.type';
 
 export interface IDocument {
   id: number;
