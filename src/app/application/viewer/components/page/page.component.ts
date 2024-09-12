@@ -16,10 +16,10 @@ export class PageComponent {
   @Input() docId: number;
   @Input() annotations: IAnnotation[] = [];
   @Input() page: IPage;
+
   constructor(private documentService: DocumentService) {}
 
   public hideAnnotationSelector(): void {
-    console.log('hideAnnotationSelector');
     this.annotationSelectorIsVisible = false;
   }
 
@@ -32,6 +32,7 @@ export class PageComponent {
     this.coords = { x: event.offsetX, y: event.offsetY };
     this.annotationSelectorIsVisible = true;
   }
+
   public addAnnotation(type: 'text' | 'image'): void {
     const annotation: IAnnotation = {
       type,
