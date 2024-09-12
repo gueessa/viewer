@@ -1,9 +1,6 @@
-<div
-  appOutsideClick
-  class="app-page__wrapper"
+<div class="app-page__wrapper"
   [id]="'page' + page.number"
   (click)="onClick($event)"
-  (onOutsideClick)="hideAnnotationSelector()"
 >
   <img class="app-page__image" [src]="page.imageUrl | assetsImage" alt="image" />
 

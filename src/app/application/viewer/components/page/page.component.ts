@@ -1,4 +1,4 @@
-import {Component, Input, ViewEncapsulation} from '@angular/core';
+import {Component, ElementRef, HostListener, Input, ViewEncapsulation} from '@angular/core';
 import {IPage} from '../../../../api/types/page.type';
 import {IAnnotation} from '../../../../api/types/annotation.type';
 import {DocumentService} from '../../services/document.service';
@@ -19,10 +19,14 @@ export class PageComponent {
 
   constructor(
     private documentService: DocumentService,
+    private elementRef: ElementRef
   ) {}
 
-  public hideAnnotationSelector(): void {
-    this.annotationSelectorIsVisible = false;
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent): void {
+    if (!this.elementRef.nativeElement.contains(event.target)) {
+      this.annotationSelectorIsVisible = false;
+    }
   }
 
   public onClick(event: MouseEvent): void {
