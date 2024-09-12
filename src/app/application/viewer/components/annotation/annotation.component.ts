@@ -28,8 +28,7 @@ export class AnnotationComponent {
     this.documentService.deleteAnnotation(this.annotation.id);
   }
 
-  public onTextChanged(): void
-  {
+  public onTextChanged(): void {
     if (!this.textInput.valid) {
       return;
     }

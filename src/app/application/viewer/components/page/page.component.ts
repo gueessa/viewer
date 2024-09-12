@@ -22,8 +22,18 @@ export class PageComponent {
     private elementRef: ElementRef
   ) {}
 
-  @HostListener('document:click', ['$event'])
-  onClickOutside(event: MouseEvent): void {
+  @HostListener('window:click', ['$event'])
+  onClickOutside(event: any): void {
+    if (!this.annotationSelectorIsVisible) {
+      return;
+    }
+
+    const annotationEl: Element = document.querySelector('.app-annotation__wrapper');
+
+    if (annotationEl && annotationEl.contains(event.target)) {
+      this.annotationSelectorIsVisible = false;
+    }
+
     if (!this.elementRef.nativeElement.contains(event.target)) {
       this.annotationSelectorIsVisible = false;
     }
