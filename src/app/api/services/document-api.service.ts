@@ -23,8 +23,10 @@ export class DocumentApiService {
 
   public byId(id: number): Observable<IDocument> {
     return of(
-      this.documents$.getValue().find((document) => document.id === Number(id))
+      this.documents$.getValue().find(document => document.id === Number(id))
     );
+
+    // return this.apiService.get('/documents/' + id);
   }
 
   public save(document: IDocument): void {

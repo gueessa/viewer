@@ -4,16 +4,16 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'viewer/view/1',
+    redirectTo: 'viewer',
     pathMatch: 'full'
   },
   {
-    path: 'viewer/view/:id',
+    path: 'viewer',
     loadChildren: () => import('./application/viewer/viewer.module').then((m) => m.ViewerModule)
   },
   {
     path: '**',
-    redirectTo: 'viewer/view/1'
+    redirectTo: 'viewer'
   }
 ];
 

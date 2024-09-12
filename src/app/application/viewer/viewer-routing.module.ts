@@ -5,6 +5,11 @@ import {ViewerComponent} from './viewer.component';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'view/1',
+    pathMatch: 'full'
+  },
+  {
+    path: 'view/:id',
     component: ViewerComponent,
   }
 ];
